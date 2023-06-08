@@ -1,0 +1,165 @@
+{% extends 'base.html' %}
+
+{% block body %}
+{% load static %}
+  
+
+<!-- nav end -->
+
+<div class="blood_search flex justify-center">
+  <img class="  mr-9"  src="{% static '/images/blood_search.jpg' %}" alt="blood_search_img">
+  <br>
+</div>
+
+<!-- form start here -->
+
+
+<form method="POST" action="{% url 'myapp:donor-reg-site' %}" enctype="multipart/form-data">{% csrf_token %} 
+  
+    {% if messages %}
+            {% for msg in messages %}
+            <p>{{msg}}</p>
+            {% endfor %}
+        {% endif %}
+  
+ 
+
+
+
+  <div class="md:flex md:justify-between md:ml-[200px] lg:flex lg:justify-between lg:ml-[200px] xl:flex xl:justify-between xl:ml-[200px] 2xl:flex 2xl:justify-between 2xl:ml-[200px]">
+
+    <div class="ml-5">
+      <label for="dristrict" class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 ">Country</label>
+      <select aria-label="Default select example" id="country" required name="country" onchange="countryfield()" class="appearance-none block   bg-slate-100 text-black dark:text-white border-2 border-gray-900 rounded-lg py-3  px-5 mb-3  leading-tight focus:outline-none focus:bg-white mr-[200px]">
+      
+        <option selected value=""> {% if instance %} {{user.donors_in_site.country}}</option>
+        {% else %}
+        <option selected value="">Choose Your Country</option>{% endif %}
+        {% for i in country %}
+        <option name="country" value="{{i.name}}" {% if request.GET.country == i.name %}{% endif %}> {{i.name}} </option>
+       
+        {% endfor %}
+      </select>
+
+      </div>    
+
+        <div class="ml-5">
+          <label for="state" class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 ">State</label>
+          <select aria-label="Default select example" required id="state" name="state" onchange="statefield()" class="appearance-none block   bg-slate-100 text-black dark:text-white border-2 border-gray-900 rounded-lg py-3  px-5 mb-3  leading-tight focus:outline-none focus:bg-white mr-[200px]">
+            <option selected value="">Choose Your State</option>
+            {% for i in state %}
+            <option  name="state" required value="{{i.name}}" {% if request.GET.state == i.name %}selected{% endif %}>{{i.name}}</option>
+            {% endfor %}
+          </select>
+          </div>
+        <br>
+      </div>
+
+<div class="md:flex md:justify-between md:ml-[200px] lg:flex lg:justify-between lg:ml-[200px] xl:flex xl:justify-between xl:ml-[200px] 2xl:flex 2xl:justify-between 2xl:ml-[200px]">
+  <div class="ml-5">
+    <label for="district" class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 ">District</label>
+    <select required  aria-label="Default select example" id="district" name="district" class="appearance-none block   bg-slate-100 text-black dark:text-white border-2 border-gray-900 rounded-lg py-3  px-5 mb-3  leading-tight focus:outline-none focus:bg-white mr-[200px]">
+      <option selected value="">Choose Your District</option>
+    
+  {% for i in district %}
+      <option name="district" value="{{i.name}}">{{i.name}}</option>
+  {% endfor %}
+    </select>
+    </div>
+
+
+   
+
+      <div class="ml-5">
+        <label for="blood" class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 ">Blood</label>
+        <select aria-label="Default select example" id="blood" name="blood" required class="appearance-none block   bg-slate-100 text-black dark:text-white border-2 border-gray-900 rounded-lg py-3  px-5 mb-3  leading-tight focus:outline-none focus:bg-white mr-[190px] ">
+          <option selected value="" >Choose Your Blood</option>
+          {% for j in bloods %}
+          <option name= "blood"  value="{{j.blood}}" {% if request.GET.blood == j.id|lower %}selected{% endif %}> {{j.blood}} </option>   
+          {% endfor %}  
+        </select>
+        </div>
+
+
+      <br>
+    </div>
+
+
+  <div class="md:flex md:justify-between md:ml-[200px] lg:flex lg:justify-between lg:ml-[200px] xl:flex xl:justify-between xl:ml-[100px] 2xl:flex 2xl:justify-between 2xl:ml-[200px]">
+    <div class="xl:ml-[130px]">
+      <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 mr-1 ml-3" for="grid-first-name">
+        Full Name
+      </label>
+      <input class="appearance-none block  bg-slate-100 text-black dark:text-white border-2 border-gray-900 rounded-lg py-3 px-4 ml-3 leading-tight focus:outline-none focus:bg-blue focus:border-gray-500  placeholder-gray-500 dark:placeholder-text-white" name="name" id="grid-first-name" required type="text" placeholder="Jane">
+    </div>
+   <br>
+
+    <div class="xl:mr-[240px] ">
+      <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 " for="grid-last-phone">
+        Phone Number
+      </label>
+      <input type="tel" id="phone" name="phone"  minlength="12" maxlength="14"class=" appearance-none block bg-slate-100 text-black dark:text-white border-2 border-gray-900 rounded-lg py-3 mr-1 leading-tight focus:outline-none focus:bg-blue focus:border-gray-500 placeholder-mr[120px] dark:placeholder-text-white"  placeholder="phone number" required>
+
+    </div>
+ 
+  </div>
+  <br>
+  <!-- name phone end -->
+
+  <!-- blood photo start -->
+  <div class="xl:flex xl:justify-center xl:gap-[220px] xl:mr-[40px] xl:pt-1 md:flex md:justiify-center md:ml-[8px]">
+
+
+    <div class="">
+        <label class=" block uppercase  tracking-wide  border-red-500 rounded text-gray-700 text-xs font-bold mb-1 ml-1 " name='image' for="grid-last-name">
+          image
+        </label>
+      
+        <input name="image" id="image" type="file" class="mt-1 border-2 border-gray-900 rounded-lg " aria-describedby="file_input_help" >
+      </div> 
+ 
+      <div class="pb-3"> 
+      <label class=" mr-3  ml-[45px] block uppercase tracking-wide text-gray-700 text-xs font-bold  " for="grid-last-name" >
+       Last Donate
+      </label>
+    
+      <input  datepicker  type="text" name="dob"   class=" ml-[45px] appearance-none block bg-slate-100 text-black dark:text-white border-2 border-gray-900 rounded-lg py-3   mb-3 leading-tight focus:outline-none focus:bg-white  " placeholder="Birth Date">
+    </div> 
+
+  </div>
+
+  <div class="flex items-start justify-center">
+    <div class="flex items-center h-5">
+      <input id="terms" aria-describedby="terms" type="checkbox" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800" required="">
+    </div>
+    <div class="ml-3 text-sm">
+      <label for="terms" class="font-light text-gray-500 dark:text-gray-300"> <span class="text-font">You are 18 or more years</span> I accept the <a class="font-medium text-primary-600 hover:underline dark:text-primary-500" href="#">Terms and Conditions</a></label>
+    </div>
+</div>
+
+
+<div class="flex justify-center">
+  
+  <button class=" mt-[70px] bg-gray-900  dark:bg-black  border-2 border-red-500 hover:border-green-500 rounded-lg hover:bg-gray-900 text-white dark:text-white font-semibold py-2 px-4 shadow">
+    SAVE
+  </button>
+</div>
+</form>
+
+<br>
+
+  <!-- footer start here -->
+  {% comment %} <script>
+    function countryfield(){
+        countryid = document.getElementById('country').value;
+        window.location = "/donorform/?country="+countryid;
+    }
+    document.getElementById('country').addEventListener('change', function(event) {
+      event.preventDefault();
+    });
+    function statefield(){
+       stateid = document.getElementById('state').value;
+       window.location = "/donorform/?country="+'{{request.GET.country}}'+"&state="+stateid;
+    }
+  </script> {% endcomment %}
+{% endblock body %}

@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block body %}
+{% load static %}
+  <!-- navbar ends here -->
+
+    <!-- main start -->
+    <main>
+
+
+        <h1 class=" mb-2"><a href="#">{{donors.user.userprofile.gender}}</a></h1>
+        <h1 class="mb-2 ">Blood: {{donors.blood}}</h1>
+        <h1 class=" ">Country: {{donors.country}}</h1>
+       
+   
+        </main>
+ 
+<br>
+
+
+
+{% endblock body %}

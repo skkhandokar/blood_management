@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+      <form method="POST" enctype="multipart/form-data" id="profileForm" data-states-url="{% url 'ajax_load_states' %}"
+        novalidate>
+        {% csrf_token %}
+        <div class="form-group mb-3">
+          <label for="{{ profile_form.state.id_for_label }}" class="form-label">State:</label>
+          {{ profile_form.state }}
+
+          {% if profile_form.state.errors %}
+          <div class="alert alert-warning" role="alert">
+            {% for error in profile_form.state.errors %}
+            {{error}}
+            {% endfor %}
+          </div>
+          {% endif %}
+        </div>
+
+        <div class="form-group mb-3">
+          <label for="{{ profile_form.city.id_for_label }}" class="form-label">City:</label>
+          {{ profile_form.city }}
+
+          {% if profile_form.city.errors %}
+          <div class="alert alert-warning" role="alert">
+            {% for error in profile_form.city.errors %}
+            {{error}}
+            {% endfor %}
+          </div>
+          {% endif %}
+        </div>
+
+        {% comment %} <div class="form-group mb-3">
+          <label for="{{ profile_form.street.id_for_label }}" class="form-label">Street:</label>
+          {{ profile_form.street }}
+
+          {% if profile_form.street.errors %}
+          <div class="alert alert-warning" role="alert">
+            {% for error in profile_form.street.errors %}
+            {{error}}
+            {% endfor %}
+          </div>
+          {% endif %}
+        </div> {% endcomment %}
+
+    </div>
+
+  </div>
+
+
+  <div class="d-flex justify-content-center align-items-center mb-3">
+    <button class="btn btn-outline-primary">
+      Update
+    </button>
+  </div>
+  </form>
+
+<script>
+  // State
+  $("#id_profile-country").change(function () {
+    var url = $("#profileForm").attr("data-states-url"); 
+    var countryId = $(this).val(); 
+
+    $.ajax({ 
+      url: '{% url '
+      ajax_load_states ' %}', 
+      data: {
+        'country': countryId 
+      },
+      success: function (data) { 
+        $("#id_profile-state").html(
+          data); 
+      }
+    });
+
+  });
+
+  // City
+  $("#id_profile-state").change(function () { 
+    var url = $("#profileForm").attr("data-states-url"); 
+    var stateId = $(this).val(); 
+
+    $.ajax({ 
+      url: '{% url '
+      ajax_load_cities ' %}', 
+      data: {
+        'state': stateId 
+      },
+      success: function (data) { 
+        $("#id_profile-city").html(
+          data); 
+      }
+    });
+
+  });
+
+  // Street 
+  $("#id_profile-city").change(function () { 
+    var url = $("#profileForm").attr("data-states-url"); 
+    var cityId = $(this).val(); 
+
+    $.ajax({ 
+      url: '{% url '
+      ajax_load_streets ' %}', 
+      data: {
+        'city': cityId 
+      },
+      success: function (data) { 
+        $("#id_profile-street").html(
+          data); 
+      }
+    });
+
+  });
+</script>
+
+{% endblock content %}

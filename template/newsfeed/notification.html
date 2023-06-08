@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% block body %}
+{% load widget_tweaks %}
+{% load notifications_tags %}   
+{% load static %}
+
+
+<!-- component -->
+
+
+  <!-- component -->
+<!-- Facebook notification -->
+<style>
+  .text-blue {
+      color: #1876f2;
+  }
+</style>
+
+<div class="flex justify-center">
+  <button  class="px-3 py-2 flex justify-center items-center bg-gradient-to-tl from-blue-500 to-cyan-400 rounded text-white focus:outline-none font-semibold shadow hover:transition-colors hover:bg-gradient-to-tr transform transition hover:scale-110 ease-out duration-300 hover:shadow-md">
+    <div class="mr-2">
+      
+    <a href="/read-notification/">Mark as Read Notification</a>
+  </button>
+</div>
+{% notifications_unread as unread_count %}
+  {% if unread_count %} 
+<div class="  rounded-lg shadow-lg bg-white mt-40 px-4 py-3 ml-5 max-auto">
+      <div class="flex items-center justify-between">
+          <span class="font-medium text-sm">New Notification</span>
+          <button class="bg-gray-200 p-2 rounded-full">
+              <svg class="h-3 w-3 fill-current" viewBox="0 0 20 20"><path d="M10 8.586L2.929 1.515 1.515 2.929 8.586 10l-7.071 7.071 1.414 1.414L10 11.414l7.071 7.071 1.414-1.414L11.414 10l7.071-7.071-1.414-1.414L10 8.586z"/></svg>
+          </button>
+      </div>
+      {% for i in user.notifications.unread %}
+      
+      <div class="flex items-center mt-3 hover:bg-gray-100 rounded-lg px-1 py-1 cursor-pointer">
+          <div class="flex flex-shrink-0 items-end">
+              <img class="h-[45px] w-[45px] rounded-full" src="{{i.actor.userprofile.image.url }}">
+              {% if not i.target %}
+          <svg class="-ml-5 h-5 w-5 rounded-full z-20 bg-white dark:bg-gray-800 " xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' viewBox='0 0 16 16'><defs><linearGradient id='a1' x1='50%' x2='50%' y1='0%' y2='100%'><stop offset='0%' stop-color='#18AFFF'/><stop offset='100%' stop-color='#0062DF'/></linearGradient><filter id='c1' width='118.8%' height='118.8%' x='-9.4%' y='-9.4%' filterUnits='objectBoundingBox'><feGaussianBlur in='SourceAlpha' result='shadowBlurInner1' stdDeviation='1'/><feOffset dy='-1' in='shadowBlurInner1' result='shadowOffsetInner1'/><feComposite in='shadowOffsetInner1' in2='SourceAlpha' k2='-1' k3='1' operator='arithmetic' result='shadowInnerInner1'/><feColorMatrix in='shadowInnerInner1' values='0 0 0 0 0 0 0 0 0 0.299356041 0 0 0 0 0.681187726 0 0 0 0.3495684 0'/></filter><path id='b1' d='M8 0a8 8 0 00-8 8 8 8 0 1016 0 8 8 0 00-8-8z'/></defs><g fill='none'><use fill='url(#a1)' xlink:href='#b1'/><use fill='black' filter='url(#c1)' xlink:href='#b1'/><path fill='white' d='M12.162 7.338c.176.123.338.245.338.674 0 .43-.229.604-.474.725a.73.73 0 01.089.546c-.077.344-.392.611-.672.69.121.194.159.385.015.62-.185.295-.346.407-1.058.407H7.5c-.988 0-1.5-.546-1.5-1V7.665c0-1.23 1.467-2.275 1.467-3.13L7.361 3.47c-.005-.065.008-.224.058-.27.08-.079.301-.2.635-.2.218 0 .363.041.534.123.581.277.732.978.732 1.542 0 .271-.414 1.083-.47 1.364 0 0 .867-.192 1.879-.199 1.061-.006 1.749.19 1.749.842 0 .261-.219.523-.316.666zM3.6 7h.8a.6.6 0 01.6.6v3.8a.6.6 0 01-.6.6h-.8a.6.6 0 01-.6-.6V7.6a.6.6 0 01.6-.6z'/></g></svg>
+          {% else %}
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" class="-ml-5 w-5 h-4 bg-green-400 rounded bg-rounded-lg ">
+            <path fill-rule="evenodd" d="M4.848 2.771A49.144 49.144 0 0112 2.25c2.43 0 4.817.178 7.152.52 1.978.292 3.348 2.024 3.348 3.97v6.02c0 1.946-1.37 3.678-3.348 3.97-1.94.284-3.916.455-5.922.505a.39.39 0 00-.266.112L8.78 21.53A.75.75 0 017.5 21v-3.955a48.842 48.842 0 01-2.652-.316c-1.978-.29-3.348-2.024-3.348-3.97V6.741c0-1.946 1.37-3.68 3.348-3.97z" clip-rule="evenodd" />
+          </svg>
+          
+          {% endif %}
+          </div>
+       
+          <div class="ml-3">
+            <div class="flex gap-2">
+              <span class="font-medium text-sm"><a href="/profile/{{i.actor.username}}">{{i.actor}}</a></span> 
+              <!-- <p class="text-sm">reacted to your comment: "Comment..."</p> -->
+              <p class="text-sm">{{ i.verb|safe }}</p>
+            </div>
+              <span class="text-sm text-blue font-semibold">{{ i.timestamp | naturaltime}}</span>
+
+          </div>
+        
+          <div class="ml-3">
+              <svg viewBox="0 0 8 8" fill="currentColor" class="h-4 w-4 text-blue"><circle cx="4" cy="4" r="3"></circle></svg>
+          </div>
+      </div>
+      {% endfor %}
+  </div>
+  {% endif %}
+  
+<div class="  rounded-lg shadow-lg bg-white  px-4 py-3 ml-5 max-auto">
+  <div class="flex items-center justify-between">
+      <span class="font-medium text-sm">Old Notification</span>
+      <button class="bg-gray-200 p-2 rounded-full">
+          <svg class="h-3 w-3 fill-current" viewBox="0 0 20 20"><path d="M10 8.586L2.929 1.515 1.515 2.929 8.586 10l-7.071 7.071 1.414 1.414L10 11.414l7.071 7.071 1.414-1.414L11.414 10l7.071-7.071-1.414-1.414L10 8.586z"/></svg>
+      </button>
+  </div>
+  {% for i in user.notifications.read|slice:":10" %}
+
+  <div class="flex items-center mt-3 hover:bg-gray-100 rounded-lg px-1 py-1 cursor-pointer">
+      <div class="flex flex-shrink-0 items-end mr-3">
+          <img class="h-[45px] w-[45px] rounded-full" src="{{i.actor.userprofile.image.url }}">
+          {% if not i.target %}
+          <svg class="-ml-5 h-5 w-5 rounded-full z-20 bg-white dark:bg-gray-800 " xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' viewBox='0 0 16 16'><defs><linearGradient id='a1' x1='50%' x2='50%' y1='0%' y2='100%'><stop offset='0%' stop-color='#18AFFF'/><stop offset='100%' stop-color='#0062DF'/></linearGradient><filter id='c1' width='118.8%' height='118.8%' x='-9.4%' y='-9.4%' filterUnits='objectBoundingBox'><feGaussianBlur in='SourceAlpha' result='shadowBlurInner1' stdDeviation='1'/><feOffset dy='-1' in='shadowBlurInner1' result='shadowOffsetInner1'/><feComposite in='shadowOffsetInner1' in2='SourceAlpha' k2='-1' k3='1' operator='arithmetic' result='shadowInnerInner1'/><feColorMatrix in='shadowInnerInner1' values='0 0 0 0 0 0 0 0 0 0.299356041 0 0 0 0 0.681187726 0 0 0 0.3495684 0'/></filter><path id='b1' d='M8 0a8 8 0 00-8 8 8 8 0 1016 0 8 8 0 00-8-8z'/></defs><g fill='none'><use fill='url(#a1)' xlink:href='#b1'/><use fill='black' filter='url(#c1)' xlink:href='#b1'/><path fill='white' d='M12.162 7.338c.176.123.338.245.338.674 0 .43-.229.604-.474.725a.73.73 0 01.089.546c-.077.344-.392.611-.672.69.121.194.159.385.015.62-.185.295-.346.407-1.058.407H7.5c-.988 0-1.5-.546-1.5-1V7.665c0-1.23 1.467-2.275 1.467-3.13L7.361 3.47c-.005-.065.008-.224.058-.27.08-.079.301-.2.635-.2.218 0 .363.041.534.123.581.277.732.978.732 1.542 0 .271-.414 1.083-.47 1.364 0 0 .867-.192 1.879-.199 1.061-.006 1.749.19 1.749.842 0 .261-.219.523-.316.666zM3.6 7h.8a.6.6 0 01.6.6v3.8a.6.6 0 01-.6.6h-.8a.6.6 0 01-.6-.6V7.6a.6.6 0 01.6-.6z'/></g></svg>
+          {% else %}
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" class="-ml-5 w-5 h-4 bg-green-400 rounded bg-rounded-lg ">
+            <path fill-rule="evenodd" d="M4.848 2.771A49.144 49.144 0 0112 2.25c2.43 0 4.817.178 7.152.52 1.978.292 3.348 2.024 3.348 3.97v6.02c0 1.946-1.37 3.678-3.348 3.97-1.94.284-3.916.455-5.922.505a.39.39 0 00-.266.112L8.78 21.53A.75.75 0 017.5 21v-3.955a48.842 48.842 0 01-2.652-.316c-1.978-.29-3.348-2.024-3.348-3.97V6.741c0-1.946 1.37-3.68 3.348-3.97z" clip-rule="evenodd" />
+          </svg>
+          
+          {% endif %}
+        </div>
+   
+    
+      <div class="ml-3">
+        <div class="flex gap-2">
+          <span class="font-medium text-sm"><a href="/profile/{{i.actor.username}}">{{i.actor}}</a></span> 
+          <!-- <p class="text-sm">reacted to your comment: "Comment..."</p> -->
+          <p class="text-sm">{{ i.verb|safe }}</p>
+        </div>
+          <span class="text-sm text-blue font-semibold">{{ i.timestamp | naturaltime}}</span>
+   
+      </div>
+   
+  </div>
+
+  {% endfor %}
+</div>
+
+  {% notifications_unread as unread_count %}
+  {% if unread_count %} 
+   You have <b>{% live_notify_badge %}</b> unread notifications.
+   {% live_notify_list %}
+   {{ live_notify_list|safe }}
+   
+  {% endif %}
+
+  {% for i in user.notifications.read %}
+
+  {{ i.timestamp }} <br>
+
+  {% endfor %}
+
+  {% endblock body %}

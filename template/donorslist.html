@@ -1,0 +1,173 @@
+{% extends 'base.html' %}
+
+{% block body %}
+{% load static %}
+
+{% load myapp_extras %}
+  <!-- navbar ends here -->
+
+    <!-- main start -->
+    <main>
+
+        <br>
+
+        <h1 class="flex justify-center text-blue-900 font-bold uppercase text-2xl">To find a blood donor near you, Please fill up the form  below</h1>
+        <br>
+        <br>
+
+       <div class="blood_search flex justify-center">
+        <img class="  mr-9"  src="{% static '/images/bloods.png' %}" alt="bloods">
+    </div>
+ <br>
+                            {% if messages %}
+                            <br>
+                            {% for msg in messages %}
+
+                            <p class="flex justify-center text-green font-bold">{{msg}}</p>
+                            {% endfor %}
+                            {% endif %}
+                            <br>
+                            {% csrf_token %} 
+    <form action="{% url 'donors:donors' %}"  method="POST">{% csrf_token %} 
+    <div class="md:flex md:justify-center lg:flex lg:justify-center xl:flex xl:justify-center 2xl:flex 2xl:justify-center">
+   
+
+             <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"> </label>
+             <select id="country" name="country" onchange="countryfield()"  class="bg-red-600 border p-1 mt-4 mr-5 m-5 border-gray-300 text-white  text-md rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+               <option selected value="">Choose a country</option>
+               {% for i in country %}
+               <option name="country" required value="{{i.name}}" {% if request.GET.country == i.name %}selected{% endif %}>{{i.name}}</option>
+               {% endfor %}
+             </select>
+
+             <label for="state" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"> </label>
+             <select id="state" name="state" onchange="statefield()" class="bg-red-600 border p-1 mt-4 mr-5 m-5 border-gray-300 text-white  text-md rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+               <option selected>Choose a State</option>
+               {% for i in state %}
+               <option  name="state" required value="{{i.name}}" {% if request.GET.state == i.name %}selected{% endif %}>{{i.name}}</option>
+               {% endfor %}
+             </select>   
+             
+             <label for="district" class=" mb-2 text-sm font-medium text-gray-900 dark:text-white "> </label>
+             <select id="district" name="district"class="bg-red-600 border p-1 mt-4 mr-5 m-5 pd-3 border-gray-300 text-white  text-md rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+               <option selected>Choose a District</option>
+               {% for i in district %}
+               <option name="district" required value="{{i.name}}">{{i.name}}</option>
+           {% endfor %}
+             </select>
+
+
+
+             <label for="blood" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"> </label>
+        <select id="blood" name="blood"  class="bg-red-600 px-1 border p-1 mt-4 mr-5 m-5 border-gray-300 text-white  text-md rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+          <option selected value="" >Blood Type</option>
+          <option selected >ALL</option>
+          {% for j in bloods %}
+          <option name= "blood"  value="{{j.blood}}" {% if request.GET.blood == j.id|lower %}selected{% endif %}> {{j.blood}} </option>   
+          {% endfor %} 
+        </select>
+
+
+       </div> 
+
+       <div class="flex justify-center ">
+     
+       <button type="submit"  class="bg-red-700 hover:bg-black text-white font-bold py-2 px-4 rounded "> <i class="fa fa-search" aria-hidden="true"></i>
+        Search</button>
+    </div>
+    </form>
+  <br>
+
+
+  <div class=" flex justify-center bg-red-600 pt-2 text-white mb-7">
+  
+    {% if length >= 0 %}
+      <h2 class="mb-2 font-bold">Total donors found {{length}}</h2>    
+     {% endif %}
+   </div>
+
+  <div class=" mb-3 grid grid-cols-2  md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-4 sm:grid-cols-2 ">
+    {% for donor in donor_list %}
+    <div class=" dark:bg-gray-900 dark:text-white  text-lg h-[220px]  w-[230px] sm:h-[300px] sm:w-[300px] border-2 border-steal shadow-2xl rounded-lg  md:mb-[50px]  md:mt-3 md:w-[200px] md:px-2 md:h-[210px] md:ml-[70px] md:mr-1  md:h-[150px] md:mb-[50px]  md:mt-3 w-[190px] md:px-2 xl:w-[290px] xl:h-[290px] md:ml-[70px] md:mr-1  md:h-[150px] md:w-[260px]">
+      {% if donor.image %}
+      <a href="/profile/{{donor.user}}" > <img class=" hover:scale-75 ml-[66px] rounded-full w-50 h-50" src="{{ donor.image.url }}" alt="donors pic"></a>
+     {% else %}
+     <a href="/profile/{{donor.user}}" > <img class="hover:scale-75 ml-[66px] rounded-full w-50 h-50" src="{% static '/images/demo.png' %}" alt="donors pic"></a>
+      {% endif %}
+      <div class="pt-[20px]">
+      
+     <h1 class=" mb-2 hover:font-bold hover:text-red-600">Name: <a href="/profile/{{donor.user}}">{{donor.user.username}}</a></h1>
+     <h1 class="mb-2 hover:font-bold hover:text-red-600">Blood: {{donor.blood}}</h1>
+     <h1 class=" hover:font-bold hover:text-red-600">Country: {{donor.country}}</h1>
+    </div>
+    </div>
+    {% endfor %}
+  </div>
+
+    </main>
+
+  <!-- main  end -->
+<br>
+{% include 'pagination.html' with queryset=donorss custom_range=custom_range %}
+
+<!-- <div class="flex flex-col items-center">
+ elp text -->
+  
+       <!-- {{page}}
+       <div class="inline-flex mt-2 xs:mt-0">
+
+        {% if page.has_previous %}
+          <button class="px-4 py-2 text-sm font-medium text-white bg-gray-800 rounded-l hover:bg-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+             
+           <a href="{% url 'donors:donors' %}?page={{page.previous_page_number }}">Prev</a>        
+          </button>
+          {% endif %}
+          {% if page.has_next %}
+          <button class="px-4 py-2 text-sm font-medium text-white bg-gray-800 border-0 border-l border-gray-700 rounded-r hover:bg-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">      
+            <a href="{% url 'donors:donors' %}?page={{page.next_page_number }}">Next</a>  
+          </button>
+          {% endif %} 
+      </div> -->
+
+      <!-- <div class="pagination">
+        <span class="step-links">
+          {% if page.has_previous %}
+          <a href="{% my_url 1 'page' request.GET.urlencode %}">&laquo; First</a>
+          <a href="{% my_url page.previous_page_number 'page' request.GET.urlencode %}">Previous</a>
+          {% endif %}
+          <span class="current">
+            Page{{page.number}} of {{page.paginator.num_pages}}.
+
+          </span>
+
+          {% if page.has_next %}
+          <a href="{% my_url page.next_page_number 'page' request.GET.urlencode %}">Next</a>
+          <a href="{% my_url page.paginator.num_pages 'page' request.GET.urlencode %}">Last</a>
+          {% endif %}
+        </span>
+      </div>
+  </div> -->
+ 
+  
+<br>
+<!-- footer start here -->
+
+
+<!-- footer end -->
+
+<script>
+  function countryfield(){
+      countryid = document.getElementById('country').value;
+      window.location = "/donors/?country="+countryid;
+  }
+  function statefield(){
+     stateid = document.getElementById('state').value;
+     window.location = "/donors/?country="+'{{request.GET.country}}'+"&state="+stateid;
+  }
+ 
+</script>
+
+
+
+{% endblock body %}
+

@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+{% block body %}
+{% load static %}
+
+
+{% if messages %}
+<br>
+{% for msg in messages %}
+
+<p class="flex justify-center text-red-500 font-bold">{{msg}}</p>
+{% endfor %}
+{% endif %}
+
+<br>            
+                      
+
+<br>
+<div class="bg-white rounded-lg border-2 shadow-lg rounded-lg">
+<form action="" class="space-y-4 md:space-y-6 "  enctype="multipart/form-data" method='POST'> 
+
+  {% csrf_token %}
+
+<div class="bg-white rounded-lg shadow-lg flex justify-center gap-[152px]  ">
+  
+  <div class="">
+  <label for="email" class="block flex justify-center text-gray-800 font-bold mb-2">{{form.full_name.label}}  </label>
+  {{ form.full_name|attr:"class: bg-white mrl-4  "}}
+</div>
+<div class="">
+  <label for="email" class="block flex justify-center text-gray-800 font-bold mb-2">{{form.gender.label}}  </label>
+  {{ form.gender|attr:"class: bg-white mrl-4 w-[220px] "}}
+</div>
+</div>
+<br>
+
+<div class="bg-white rounded-lg shadow-lg flex justify-center gap-[152px]  ">
+  <div class="">
+    <label for="email" class="block flex justify-center text-gray-800 font-bold mb-2">{{form.religion.label}}  </label>
+  {{ form.religion|attr:"class: bg-white mrl-4  "}}
+</div>
+<div class="">
+  <label for="email" class="block flex justify-center text-gray-800 font-bold mb-2">{{form.nationality.label}}  </label>
+  {{ form.nationality|attr:"class: bg-white mrl-4 w-[220px] "}}
+</div>
+</div>
+<br>
+
+
+<div class="bg-white rounded-lg shadow-lg flex justify-center gap-[152px]  ">
+  <div class="">
+    <label for="email" class="block flex justify-center text-gray-800 font-bold mb-2">{{form.address.label}}  </label>
+  {{ form.address|attr:"class: bg-white mrl-4  "}}
+</div>
+<div class="">
+  <label for="email" class="block flex justify-center text-gray-800 font-bold mb-2">{{form.permanant_address.label}}  </label>
+  {{ form.permanant_address|attr:"class: bg-white mrl-4 w-[220px] "}}
+</div>
+</div>
+<br>
+
+<div class="bg-white rounded-lg shadow-lg flex justify-center gap-[131px]  ">
+  <div class="">
+    <label for="email" class="block flex justify-center text-gray-800 font-bold mb-2">{{form.birth_date.label}}  </label>
+  {{ form.birth_date|attr:"class: bg-white w-[220px] "}}
+</div>
+<div class="">
+  <label for="email" class="block flex justify-center text-gray-800 font-bold mb-2">{{form.profession.label}}  </label>
+  {{ form.profession|attr:"class: bg-white   "}}
+</div>
+</div>
+<br>
+
+<div class="">
+  <label for="email" class="block flex justify-center text-gray-800 font-bold mb-2">{{form.biodata.label}}  </label>
+  {{ form.biodata|attr:"class: ml-[570px] bg-white mrl-4 w-[262px] h-[122px] "}}
+</div>
+  <br>
+
+  <div class="">
+    <label for="email" class="block flex justify-center text-gray-800 font-bold mb-2">{{form.image.label}}  </label>
+  {{ form.image|attr:"class: ml-[570px] bg-white mrl-4 "}}
+</div>
+<br>
+<button type="submit"
+class="w-full bg-indigo-500 text-white py-2 px-4 rounded-lg hover:bg-indigo-600 focus:outline-none focus:shadow-outline-indigo mb-2">SAVED
+</button>
+  </form>
+</div>
+{% endblock body %}

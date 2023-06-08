@@ -1,0 +1,154 @@
+{% extends 'base.html' %}
+
+{% block body %}
+{% load static %}
+
+<style>
+  marquee{
+  font-size: 30px;
+  font-weight: 800;
+  color: #a9160b;
+  font-family: sans-serif;
+  background-color: rgb(228, 193, 183);
+  }
+</style>
+
+  {% if messages %}
+  <br>
+  {% for msg in messages %}
+
+  <p class="flex justify-center text-green font-bold">{{msg}}</p>
+  {% endfor %}
+{% endif %}
+<br>
+<!-- nav bar ends here -->
+
+<br>
+<!-- <div class="flex justify-center text-[35px] text-red-500 font-bold">Hello Welcome</div> -->
+<marquee   >You are Welcome in our site</marquee>
+<br>
+<br>
+<div id="controls-carousel" class="" data-carousel="slide">
+    <!-- Carousel wrapper -->
+    <div class="relative h-56 overflow-hidden rounded-lg md:h-96">
+         <!-- Item 1 -->
+        <div class="duration-700 ease-in-out" data-carousel-item="active">
+            <img src="{% static '/images/1.png' %}" class=" absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
+        </div>
+        <!-- Item 2 -->
+        <div class="duration-700 ease-in-out" data-carousel-item="active">
+            <img src="{% static '/images/2.jpg' %}" class=" absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
+        </div>
+        <!-- Item 3 -->
+        <div class=" duration-700 ease-in-out" data-carousel-item>
+            <img src="{% static '/images/3.jpg' %}" class=" absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
+        </div>
+       
+    </div>
+ <br>
+ <br>
+    <div class=" ml-3 flex justify-center gap-[190px]">
+      <div class=" w-[1650px]">
+        <img class="w-[1050px] " src="{% static '/images/GBF-work1.jpg' %}" alt="">
+      </div>
+
+      <div class="mr-3 ">
+        <h1 class="text-[35px] font-bold text-pink-700">A SAFER, MORE PLENTIFUL SUPPLY</h1>
+        <br>
+        <h3>Every day in the world’s poorest countries, people die because of a shortage of blood. Blood Donor helps blood collectors in these countries by providing money, equipment, training and other forms of support 
+          – including launching voluntary blood donation programs.</h3>
+      </div>
+    </div>
+      <br>
+       <br>
+      <div>
+      <h1 class="text-[35px] flex justify-center font-bold text-pink-700">VOLUNTARY NON-REMUNERATED BLOOD DONATION</h1>
+      <br>
+      <h3 class="flex justify-center ml-[120px] mr-[120px] ">Voluntary Non-Remunerated Blood Donation (VNRBD) is the cornerstone of a safe 
+        and sufficient blood supply. Blood Donor works with blood collectors in low and middle-income 
+        countries to establish and enhance the recruitment, retention and management of volunteer
+         donors. <br> <br> A system of voluntary donation driven by benevolence is preferable. However,
+          creating a community appreciation of blood donation is challenging; as is recruiting, 
+          motivating and retaining donors and managing them effectively.<br> <br>To help in the transition from paid/replacement donation to sustainable 100% VNRBD, 
+          Global Blood Fund: <br> <br> <br></h3>
+           
+          <div class="flex justify-center ml-[120px] mr-[120px] gap-[100px]">
+          <div class="w-[150px] ">
+            <img class=" " src="{% static '/images/111.png' %}" alt="">
+            <h3 class="text-pink-700">Delivers & funds training in donor recruitment, retention and management.</h3>
+          </div>
+          <div class="w-[150px] ">
+            <img class=" " src="{% static '/images/2222.png' %}" alt="">
+            <h3 class="text-pink-700">Publishes and produces online tools to aid professional development.</h3>
+          </div>
+          <div class="w-[150px] ">
+            <img class=" " src="{% static '/images/333.png' %}" alt="">
+            <h3 class="text-pink-700">Supports & encourages experts to present best practices at international forums..</h3>
+          </div>
+          <div class="w-[150px] ">
+            <img class=" " src="{% static '/images/444.png' %}" alt="">
+            <h3 class="text-pink-700">Provides blood agencies with donor recruitment and management tools.</h3>
+          </div>
+        </div>
+        <br>
+        <br>
+    
+        <div class="flex justify-center ml-[80px] mr-[80px] gap-[120px] ">
+          <div class= "w-[650px]">
+            <h1 class="text-[35px] font-bold text-pink-700">EQXCHANGE Blood Donor</h1><br> <br>
+            <h3>EqXchange is Global Blood Fund’s rehoming program, placing vital surplus equipment 
+              into the hands of blood agencies with limited resources. <br> <br> 
+              Blood Donor's technology and networks connect equipment with the needs of blood centers
+               around the world. Once a match is made, GBF will manage and fund the logistics 
+               of moving the donated equipment to its new home. <br> <br>
+               For the giving organization, donating to GBF is simple and is more cost-efficient than 
+               alternative forms of disposal.</h3>
+          </div>
+          <div class=" w-[950px] h-[650px]">
+            <img class="h-[350px]" src="{% static '/images/mm.jpg' %}" alt="">
+          </div>
+
+        </div>
+
+
+    </div>
+    <!-- Slider controls -->
+    <!-- <button type="" class="absolute top-0 left-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
+        <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+            <svg aria-hidden="true" class="w-6 h-6 text-white dark:text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+            <span class="">Previous</span>
+        </span>
+    </button>
+    <button type="" class="absolute top-0 right-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-next>
+        <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+            <svg aria-hidden="true" class="w-6 h-6 text-white dark:text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+            <span class="">Next</span>
+        </span>
+    </button> -->
+
+  </div>
+
+
+
+
+
+<!-- footer end -->
+
+<script>
+    function myFunction() {
+        var x = document.getElementById("myTopnav");
+        if (x.className === "topnav") {
+          x.className += " responsive";
+        } else {
+          x.className = "topnav";
+        }
+      }
+</script>
+
+
+
+<!-- Option 1: tailwind Bundle with Popper -->
+
+
+
+{% endblock body %}
